@@ -29,7 +29,7 @@ namespace TheFollow.Models
             Npc = false;
             Level = 1;
             Name = name;
-            Title = Titles.GetTitleForLevel(Level);
+            Title = Pools.GetTitleForLevel(Level);
             Experience = 0;
             AttackStrength = 2;
             NextLevel = 10;

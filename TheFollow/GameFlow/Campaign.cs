@@ -116,7 +116,7 @@ namespace TheFollow.GameFlow
 
         private static void HandleMonsterEncounter()
         {
-            var monster = Beastiary.GetMonster();
+            var monster = Pools.GetMonster();
             ConsoleHelpers.LogEnemyMessage("You have encountered a monster. It is an {0} {1}", monster.Title, monster.Name);
             Console.WriteLine("\nPress enter to face the enemy.");
             Console.ReadKey();

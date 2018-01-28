@@ -25,8 +25,8 @@ namespace TheFollow.Models
             Id = "Monster_" + Guid.NewGuid();
             Npc = true;
             Level = GameInstance.Instance.CurrentPlayer.Level;
-            Name = Beastiary.GetMonsterName();
-            Title = Titles.GetTitleForLevel(Level);
+            Name = Pools.GetMonsterName();
+            Title = Pools.GetTitleForLevel(Level);
             Alive = true;
             AttackStrength = Level;
             Body = new List<IHealth>

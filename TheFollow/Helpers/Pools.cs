@@ -7,7 +7,7 @@ using TheFollow.Models;
 
 namespace TheFollow.StaticHelpers
 {
-    internal static class Titles
+    internal static class Pools
     {
         private static List<Title> TitlesLibrary = new List<Title>
         {
@@ -35,12 +35,29 @@ namespace TheFollow.StaticHelpers
 
             new Title (10, "Legendary")
         };
+        internal static List<string> MonsterNamesLibrary = new List<string>
+        {
+            "Rat",
+            "Goo",
+            "Thief"
+        };
 
         public static string GetTitleForLevel(int level)
         {
             var titles = TitlesLibrary.Where(x => x.Level == level).ToList();
             var r = Dice.random.Next(0, titles.Count);
             return titles[r].Value;
+        }
+
+        internal static string GetMonsterName()
+        {
+            var r = Dice.random.Next(0, MonsterNamesLibrary.Count);
+            return MonsterNamesLibrary[r];
+        }
+
+        internal static Monster GetMonster()
+        {
+            return new Monster();
         }
     }
 }
