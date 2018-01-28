@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models;
+using TheFollow.Models.Interfaces;
 using TheFollow.Models.Wrappers;
 using TheFollow.StaticHelpers;
 
@@ -59,25 +60,25 @@ namespace TheFollow.GameFlow
             Console.WriteLine("Press enter to make a move and see what this day brought you");
             Console.ReadKey();
 
-            var dayEvent = Navigation.PickEvent(new List<EventWeight> {
-                new EventWeight { Event = Models.Interfaces.EventType.None, Weight = 20 },
-                new EventWeight { Event = Models.Interfaces.EventType.VillageAproach, Weight = 15 },
-                new EventWeight { Event = Models.Interfaces.EventType.MonsterEncounter, Weight = 65 }
+            var dayEvent = EventWeight.Pick(new List<EventWeight> {
+                new EventWeight { Event = EventType.None, PickWeight = 20 },
+                new EventWeight { Event = EventType.VillageAproach, PickWeight = 15 },
+                new EventWeight { Event = EventType.MonsterEncounter, PickWeight = 65 }
             });
 
             switch (dayEvent)
             {
-                case Models.Interfaces.EventType.None:
-                    HandleNoneEncounter();
-                    break;
-                case Models.Interfaces.EventType.VillageAproach:
-                    HandleVillageEncounter();
-                    break;
-                case Models.Interfaces.EventType.MonsterEncounter:
-                    HandleMonsterEncounter();
-                    break;
+                case EventType.None:
+                     HandleNoneEncounter();
+                     break;
+                case EventType.VillageAproach:
+                     HandleVillageEncounter();
+                     break;
+                case EventType.MonsterEncounter:
+                     HandleMonsterEncounter();
+                     break;
                 default:
-                    break;
+                     break;
             }
         }
 

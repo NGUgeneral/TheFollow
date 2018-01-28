@@ -4,14 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.Interfaces;
+using TheFollow.StaticHelpers;
 
 namespace TheFollow.Models.Wrappers
 {
-    internal class EventWeight
+    internal class EventWeight : IPickable 
     {
-        internal EventType Event { get; set; }
-        internal uint Weight { get; set; }
-        internal uint MinPickChance { get; set; }
-        internal uint MaxPickChance { get; set; }
+        public EventType Event { get; set; }
+        public uint PickWeight { get; set; }
+        public uint MinPickChance { get; set; }
+        public uint MaxPickChance { get; set; }
+
+        public static EventType Pick(IEnumerable<IPickable> events)
+        {
+            return (Picker<EventWeight>.Pick_Action(events) as EventWeight).Event;
+        }
     }
+
+    
 }

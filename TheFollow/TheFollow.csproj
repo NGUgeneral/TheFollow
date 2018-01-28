@@ -52,6 +52,7 @@
     <Compile Include="Models\Interfaces\IItem.cs" />
     <Compile Include="Models\Interfaces\IModifier.cs" />
     <Compile Include="Models\Interfaces\Enums.cs" />
+    <Compile Include="Models\Interfaces\IPickable.cs" />
     <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Title.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="StaticHelpers\ConsoleHelpers.cs" />
     <Compile Include="StaticHelpers\Dice.cs" />
     <Compile Include="StaticHelpers\Navigation.cs" />
+    <Compile Include="StaticHelpers\Picker.cs" />
     <Compile Include="StaticHelpers\Titles.cs" />
   </ItemGroup>
   <ItemGroup>
