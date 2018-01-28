@@ -11,13 +11,11 @@ namespace TheFollow.StaticHelpers
     {
         internal static EventType MakeAMove()
         {   
-            var typesAmount = Enum.GetNames(typeof(EventType)).Length;
-            var index = Dice.random.Next(1, typesAmount + 1);
-
             while (true)
             {
-                if (Dice.ThrowDice(0, 6, 3)) return (EventType)index;
-                index = index >= typesAmount ? 1 : index + 1;
+                if (Dice.ThrowDice(0, 6, 5)) return EventType.VillageAproach;
+                if (Dice.ThrowDice(0, 6, 5)) return EventType.None;
+                if (Dice.ThrowDice(0, 6, 2)) return EventType.MonsterEncounter;
             }
         }
     }
