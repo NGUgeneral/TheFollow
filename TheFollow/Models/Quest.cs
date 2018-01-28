@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.Interfaces;
-using TheFollow.StaticHelpers;
+using TheFollow.Helpers;
 
 namespace TheFollow.GameFlow
 {
@@ -21,19 +21,19 @@ namespace TheFollow.GameFlow
 
         internal void GetIntro()
         {
-            ConsoleHelpers.UserMessage(this.Description);
+            ConsoleHelper.UserMessage(this.Description);
         }
 
         internal void GetGoalDescription()
         {
-            ConsoleHelpers.UserMessage("\nQuest goal:\n{0}", this.Description_Start);
+            ConsoleHelper.UserMessage("\nQuest goal:\n{0}", this.Description_Start);
         }
 
         internal void HandleFinishQuest()
         {
             this.Completed = true;
             GameInstance.Instance.CurrentGameData.CurrentQuestIndex += 1;
-            ConsoleHelpers.UserMessage(this.Description_Finish);
+            ConsoleHelper.UserMessage(this.Description_Finish);
 
             if (GameInstance.Instance.CurrentGameData.CurrentQuestIndex >= GameInstance.Instance.CurrentGameData.Quests.Count)
             {

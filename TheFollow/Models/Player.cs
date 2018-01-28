@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TheFollow.Models.BodyParts;
 using TheFollow.Models.Interfaces;
 using TheFollow.Models.Wrappers;
-using TheFollow.StaticHelpers;
+using TheFollow.Helpers;
 
 namespace TheFollow.Models
 {
@@ -38,13 +38,13 @@ namespace TheFollow.Models
             Alive = true;
             Inventory = new List<Item>();
             Body = new List<BodyPart>
-            {
-                new BodyPart(BodyPartType.Head, true, 3, 3),
-                new BodyPart(BodyPartType.Body, true, 10, 10),
+            {   
                 new BodyPart(BodyPartType.RightHand, false, 4, 4),
                 new BodyPart(BodyPartType.LeftHand, false, 4, 4),
                 new BodyPart(BodyPartType.RightLeg, false, 5, 5),
-                new BodyPart(BodyPartType.LeftLeg, false, 5, 5)
+                new BodyPart(BodyPartType.LeftLeg, false, 5, 5),
+                new BodyPart(BodyPartType.Body, true, 10, 10),
+                new BodyPart(BodyPartType.Head, true, 3, 3),
             };
 
             //Initial inventory
@@ -53,13 +53,13 @@ namespace TheFollow.Models
             Inventory.Add(Pools.GetItemById("TribalHelmet"));
         }
 
-        internal void EquipAllItems()
+        internal void InitialEquip()
         {
-            foreach(var item in Inventory)
-            {
-                var bodyPartIndex = Body.IndexOf(Body.SingleOrDefault(x => x.Title == item.Slot) as BodyPart);
-                Body[bodyPartIndex].EquipItem(item.Id);
-            }
+            //foreach(var item in Inventory)
+            //{
+            //    var bodyPartIndex = Body.IndexOf(Body.SingleOrDefault(x => x.Title == item.Slot) as BodyPart);
+            //    Body[bodyPartIndex].EquipItem(item.Id);
+            //}
         }
 
         public void Regenerate()
@@ -79,7 +79,7 @@ namespace TheFollow.Models
         {
             PartialRegenerate_Action(buff);
             Console.WriteLine("You have healed up a little bit.");
-            ConsoleHelpers.LogUserMessage("Current health is {0}hp", BodyStats.GetTotalHealth(this));
+            ConsoleHelper.LogUserMessage("Current health is {0}hp", BodyStats.GetTotalHealth(this));
         }
 
         private void PartialRegenerate_Action(int buff)

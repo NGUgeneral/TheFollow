@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheFollow.Helpers;
 
-namespace TheFollow.StaticHelpers
+namespace TheFollow.Helpers
 {
-    internal static class ConsoleHelpers
+    internal static class ConsoleHelper
     {
         internal static ConsoleKey FilterInput(string message, ConsoleKey[] keys)
         {
@@ -43,7 +44,7 @@ namespace TheFollow.StaticHelpers
                         PrintInventory();
                         break;
                     case "e":
-                        Handele_E();
+                        Handle_E();
                         break;
                     case "t":
                         TakeOff_E();
@@ -63,7 +64,7 @@ namespace TheFollow.StaticHelpers
 
         private static void TakeOff_E()
         {
-            LogMessage("Which slot would you like to take off?");
+            LogMessage("Which inventory item would you like to take off?");
             var slot = Console.ReadLine();
             if (int.TryParse(slot, out int index))
             {
@@ -89,9 +90,9 @@ namespace TheFollow.StaticHelpers
             }
         }
 
-        private static void Handele_E()
+        private static void Handle_E()
         {
-            LogMessage("Which slot would you like to equip?");
+            LogMessage("Which inventory item would you like to equip?");
             var slot = Console.ReadLine();
             if (int.TryParse(slot, out int index))
             {
@@ -130,11 +131,10 @@ namespace TheFollow.StaticHelpers
 
         private static void PrintStat()
         {
-            LogMessage("Your hero is at level {0}", GameInstance.Instance.CurrentPlayer.Level);
-            LogMessage("Experience {0}", GameInstance.Instance.CurrentPlayer.Experience);
-            LogMessage("You attack power is {0}", GameInstance.Instance.CurrentPlayer.AttackStrength);
-            LogMessage("Level up at {0}", GameInstance.Instance.CurrentPlayer.NextLevel);
-            LogMessage("Current healt {0}hp", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
+            LogMessage("Level: {0}", GameInstance.Instance.CurrentPlayer.Level);
+            LogMessage("Experience: {0}/{1}exp", GameInstance.Instance.CurrentPlayer.Experience, GameInstance.Instance.CurrentPlayer.NextLevel);
+            LogMessage("Attack: {0}", GameInstance.Instance.CurrentPlayer.AttackStrength);
+            BodyStats.PrintBodyPartsStat(GameInstance.Instance.CurrentPlayer);
         }
 
         private static void PrintHelp()

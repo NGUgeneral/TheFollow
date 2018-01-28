@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.Interfaces;
 
-namespace TheFollow.StaticHelpers
+namespace TheFollow.Helpers
 {
     internal static class Picker<T> where T : IPickable
     {

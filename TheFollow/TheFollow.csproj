@@ -46,6 +46,7 @@
     <Compile Include="GameFlow\Campaign.cs" />
     <Compile Include="GameFlow\Quests\Quest1_TheTrial.cs" />
     <Compile Include="Helpers\FightHelper.cs" />
+    <Compile Include="Helpers\InventoryHelper.cs" />
     <Compile Include="Models\GameData.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Quest.cs" />

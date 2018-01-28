@@ -7,7 +7,7 @@ using TheFollow.Models;
 using TheFollow.Models.Interfaces;
 using TheFollow.Models.Wrappers;
 
-namespace TheFollow.StaticHelpers
+namespace TheFollow.Helpers
 {
     internal static class Pools
     {
@@ -120,6 +120,44 @@ namespace TheFollow.StaticHelpers
             },
             new Item()
             {
+                Id="TribalShield",
+                Type = ModifierType.Defense,
+                Specifier = ItemTypeSpecifier.DefenseGear,
+                Slot = BodyPartType.LeftHand,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "Tribal Shield",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Slot = BodyPartType.LeftHand,
+                        Value = 1
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalBow",
+                Type = ModifierType.Attack,
+                Specifier = ItemTypeSpecifier.AttackGear,
+                Slot = BodyPartType.LeftHand,
+                Ranged = true,
+                TwoHanded = true,
+                Description = "Tribal Bow",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Attack,
+                        Slot = BodyPartType.LeftHand,
+                        Value = 2
+                    }
+                }
+            },
+            new Item()
+            {
                 Id="TribalOutfit",
                 Type = ModifierType.Defense,
                 Specifier = ItemTypeSpecifier.BodyPlate,
@@ -145,6 +183,42 @@ namespace TheFollow.StaticHelpers
                 Ranged = false,
                 TwoHanded = false,
                 Description = "A traditional mask of the warriors from your tribe.",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Value = 1
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalLeggings",
+                Type = ModifierType.Defense,
+                Specifier = ItemTypeSpecifier.Leggings,
+                Slot = BodyPartType.LeftLeg,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "Tribal leggings",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Value = 1
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalBracers",
+                Type = ModifierType.Defense,
+                Specifier = ItemTypeSpecifier.Gloves,
+                Slot = BodyPartType.LeftHand,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "Tribal bracers",
                 Modifiers = new List<Modifier>
                 {
                     new Modifier

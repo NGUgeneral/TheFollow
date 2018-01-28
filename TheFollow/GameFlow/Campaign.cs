@@ -8,7 +8,6 @@ using TheFollow.Helpers;
 using TheFollow.Models;
 using TheFollow.Models.Interfaces;
 using TheFollow.Models.Wrappers;
-using TheFollow.StaticHelpers;
 
 namespace TheFollow.GameFlow
 {
@@ -21,13 +20,14 @@ namespace TheFollow.GameFlow
             Console.Write("Pease type in you name: ");
             GameInstance.Instance.CurrentPlayer = new Player(Console.ReadLine());
 
-            GameInstance.Instance.CurrentPlayer.EquipAllItems();
+            GameInstance.Instance.CurrentPlayer.InitialEquip();
 
             Console.WriteLine("\nPlease - remember, any time you need help with the commands print '-h'");
-            ConsoleHelpers.UserMessage("\nSo, {0}, your journey has begun.", GameInstance.Instance.CurrentPlayer.Name);
+            ConsoleHelper.UserMessage("\nSo, {0}, your journey has begun.", GameInstance.Instance.CurrentPlayer.Name);
 
             HandleSwitchQuest();
-            
+            ConsoleHelper.UserMessage("\nDon`t forget to gear up from your inventory.");
+
             while (GameInstance.Instance.CurrentPlayer.Alive && !GameInstance.Instance.CurrentGameData.Finished)
             {
                 StartDay();
@@ -43,15 +43,15 @@ namespace TheFollow.GameFlow
 
         internal static void HandleEndGame()
         {
-            GameInstance.Instance.CurrentGameData.Replay = ConsoleHelpers.FilterInput("Would you like to replay? (y/n)", new ConsoleKey[] { ConsoleKey.Y, ConsoleKey.N }) == ConsoleKey.Y ? true : false;
+            GameInstance.Instance.CurrentGameData.Replay = ConsoleHelper.FilterInput("Would you like to replay? (y/n)", new ConsoleKey[] { ConsoleKey.Y, ConsoleKey.N }) == ConsoleKey.Y ? true : false;
         }
 
         private static void StartDay()
         {
             var player = GameInstance.Instance.CurrentPlayer;
             Console.WriteLine("\nNew day. What will it bring?");
-            ConsoleHelpers.LogUserMessage("Current health is {0}hp", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
-            ConsoleHelpers.FilterInput("Press enter to make a move and see what this day brought you", new ConsoleKey[]{ ConsoleKey.Enter });
+            ConsoleHelper.LogUserMessage("Current health is {0}hp", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
+            ConsoleHelper.FilterInput("Press enter to make a move and see what this day brought you", new ConsoleKey[]{ ConsoleKey.Enter });
 
             var dayEvent = EventWeight.Pick(new List<EventWeight> {
                 new EventWeight { Event = EventType.None, PickWeight = 20 },
@@ -109,8 +109,8 @@ namespace TheFollow.GameFlow
         private static void HandleMonsterEncounter()
         {
             var monster = Pools.GetMonster();
-            ConsoleHelpers.LogEnemyMessage("You have encountered a monster. It is an {0} {1}", monster.Title, monster.Name);
-            ConsoleHelpers.FilterInput("\nPress enter to face the enemy.", new ConsoleKey[] { ConsoleKey.Enter });
+            ConsoleHelper.LogEnemyMessage("You have encountered a monster. It is an {0} {1}", monster.Title, monster.Name);
+            ConsoleHelper.FilterInput("\nPress enter to face the enemy.", new ConsoleKey[] { ConsoleKey.Enter });
             while (monster.Alive)
             {
                 FightHelper.BattleTurn(ref monster);
@@ -124,16 +124,28 @@ namespace TheFollow.GameFlow
 
         internal static void ProcessLevelUp()
         {
+            GameInstance.Instance.CurrentPlayer.Level += 1;
+            GameInstance.Instance.CurrentPlayer.NextLevel += 10;
+            ConsoleHelper.UserMessage("Congratulations! You gained a level up! Current level is {0}", GameInstance.Instance.CurrentPlayer.Level);
+
             foreach (var b in GameInstance.Instance.CurrentPlayer.Body)
             {
                 b.MaxHealth += 1;
             }
             GameInstance.Instance.CurrentPlayer.AttackStrength += 1;
             GameInstance.Instance.CurrentPlayer.PartialRegenerate(1);
-
-            GameInstance.Instance.CurrentPlayer.Level += 1;
-            GameInstance.Instance.CurrentPlayer.NextLevel += 10;
-            ConsoleHelpers.UserMessage("Congratulations! You gained a level up! Current level is {0}", GameInstance.Instance.CurrentPlayer.Level);
+            
+            switch(GameInstance.Instance.CurrentPlayer.Level)
+            {
+                case 2:
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalBracers"));
+                    break;
+                case 3:
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalLeggings"));
+                    break;
+                default:
+                    break;
+            }
 
             var currentQuest = GameInstance.Instance.CurrentGameData.Quests[GameInstance.Instance.CurrentGameData.CurrentQuestIndex];
             if (currentQuest is Quest1_TheTrial)

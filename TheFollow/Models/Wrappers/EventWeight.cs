@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.Interfaces;
-using TheFollow.StaticHelpers;
+using TheFollow.Helpers;
 
 namespace TheFollow.Models.Wrappers
 {

@@ -11,7 +11,7 @@ namespace TheFollow.Models.Interfaces
         HeadGear = 1,
         BodyPlate = 2,
         Gloves = 3,
-        Legins = 4,
+        Leggings = 4,
         Boots = 5,
         Amulet = 6,
         AttackGear = 7,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TheFollow.Events;
 using TheFollow.GameFlow;
 using TheFollow.Models;
-using TheFollow.StaticHelpers;
+using TheFollow.Helpers;
 
 namespace TheFollow
 {

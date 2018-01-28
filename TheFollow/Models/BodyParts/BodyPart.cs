@@ -15,7 +15,7 @@ namespace TheFollow.Models.BodyParts
         public int Defense { get; set; }
         public bool Crushed { get => Health == 0; }
         public Item WearableItem { get; set; }
-        public Item HoldaleItem { get; set; }
+        public Item HoldableItem { get; set; }
         private int _health;
         public int Health { get => _health < 0 ? 0 : _health; set => _health = value; }
         public int MaxHealth { get; set; }
