@@ -42,8 +42,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameInstance.cs" />
+    <Compile Include="Models\BodyParts\BodyPart.cs" />
+    <Compile Include="Models\Interfaces\IHealth.cs" />
+    <Compile Include="Models\Interfaces\IInhabitant.cs" />
+    <Compile Include="Models\Interfaces\IItem.cs" />
+    <Compile Include="Models\Interfaces\IModifier.cs" />
+    <Compile Include="Models\Interfaces\Enums.cs" />
+    <Compile Include="Models\Monster.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Models\Title.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticHelpers\Beastiary.cs" />
+    <Compile Include="StaticHelpers\BodyStats.cs" />
+    <Compile Include="StaticHelpers\Dice.cs" />
+    <Compile Include="StaticHelpers\Navigation.cs" />
+    <Compile Include="StaticHelpers\Titles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
