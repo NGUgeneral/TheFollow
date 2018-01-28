@@ -61,7 +61,8 @@ namespace TheFollow.Models
         internal void PartialRegenerate(int buff = 0)
         {
             PartialRegenerate_Action(buff);
-            Console.WriteLine("You have healed up a little bit. Current health is {0}hp", BodyStats.GetTotalHealth(this));
+            Console.WriteLine("You have healed up a little bit.");
+            ConsoleHelpers.LogUserMessage("Current health is {0}hp", BodyStats.GetTotalHealth(this));
         }
 
         private void PartialRegenerate_Action(int buff)

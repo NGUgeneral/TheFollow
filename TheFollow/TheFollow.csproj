@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\LevelUpEvent.cs" />
+    <Compile Include="GameFlow\Campaign.cs" />
     <Compile Include="GameInstance.cs" />
     <Compile Include="Helpers\MessageHub.cs" />
     <Compile Include="Models\BodyParts\BodyPart.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Title.cs" />
+    <Compile Include="Models\Wrappers\EventWeight.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticHelpers\Beastiary.cs" />

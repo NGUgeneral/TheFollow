@@ -12,6 +12,7 @@ namespace TheFollow
     {
         private static readonly GameInstance instance = new GameInstance();
         internal Player CurrentPlayer { get; set; }
+        private static bool Replay = true;
 
         private GameInstance() { }
 
@@ -21,6 +22,16 @@ namespace TheFollow
             {
                 return instance;
             }
+        }
+
+        internal static void UpdateReplay(bool replay)
+        {
+            Replay = replay;
+        }
+
+        internal static bool GetReplay()
+        {
+            return Replay;
         }
     }
 }

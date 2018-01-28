@@ -8,6 +8,20 @@ namespace TheFollow.StaticHelpers
 {
     internal static class ConsoleHelpers
     {
+        internal static ConsoleKey FilterInput(string message, ConsoleKey[] keys)
+        {
+            Console.WriteLine(message);
+            ConsoleKey input = Console.ReadKey().Key;
+
+            while (!keys.Contains(input))
+            {
+                Console.WriteLine(message);
+                input = Console.ReadKey().Key;
+            }
+
+            return input;
+        }
+
         internal static void LogMessage(string s, object arg0 = null, object arg1 = null, object arg2 = null, object arg3 = null)
         {
             ConsoleWithForeground(s, ConsoleColor.DarkGray, arg0, arg1, arg2, arg3);
@@ -40,4 +54,6 @@ namespace TheFollow.StaticHelpers
             Console.ResetColor();
         }
     }
+
+    
 }
