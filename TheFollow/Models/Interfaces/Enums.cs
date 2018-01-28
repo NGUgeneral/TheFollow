@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace TheFollow.Models.Interfaces
 {
-    internal enum ItemType
-    {
-        Plates = 1,
-        Weapon = 2,
-        Consumable = 3
-    }
-
     internal enum ItemTypeSpecifier
     {
         HeadGear = 1,
@@ -30,7 +23,15 @@ namespace TheFollow.Models.Interfaces
     {
         Attack = 1,
         Defense = 2,
-        Heal = 3
+        Consumable = 3
+    }
+
+    internal enum BodyPartType
+    {
+        Head = 1,
+        Body = 2,
+        Hand = 3,
+        Leg = 4
     }
 
     internal enum EventType

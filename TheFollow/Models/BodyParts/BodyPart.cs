@@ -10,6 +10,7 @@ namespace TheFollow.Models.BodyParts
     {
         public string Title { get; set; }
         public bool Vital { get; set; }
+        public int Defense { get; set; }
         private int _health;
         public int Health { get => _health < 0 ? 0 : _health; set => _health = value; }
         public int MaxHealth { get; set; }
@@ -32,7 +33,7 @@ namespace TheFollow.Models.BodyParts
             Health -= value;
         }
 
-        public bool HealtCheck()
+        public bool HealthCheck()
         {
             return Health > 0;
         }

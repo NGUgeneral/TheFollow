@@ -49,7 +49,7 @@ namespace TheFollow.StaticHelpers
             new Item()
             {
                 Id="TribalSword",
-                Type = ItemType.Weapon,
+                Type = ModifierType.Attack,
                 Specifier = ItemTypeSpecifier.AttackGear,
                 Ranged = false,
                 TwoHanded = false,
@@ -59,6 +59,7 @@ namespace TheFollow.StaticHelpers
                     new Modifier
                     {
                         Perk = ModifierType.Attack,
+                        Slot = BodyPartType.Hand,
                         Value = 1
                     }
                 }
@@ -66,7 +67,7 @@ namespace TheFollow.StaticHelpers
             new Item()
             {
                 Id="TribalOutfit",
-                Type = ItemType.Plates,
+                Type = ModifierType.Defense,
                 Specifier = ItemTypeSpecifier.BodyPlate,
                 Ranged = false,
                 TwoHanded = false,

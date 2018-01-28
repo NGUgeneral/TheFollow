@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.BodyParts;
 using TheFollow.Models.Interfaces;
+using TheFollow.Models.Wrappers;
 using TheFollow.StaticHelpers;
 
 namespace TheFollow.Models
@@ -95,6 +96,19 @@ namespace TheFollow.Models
             {
                 GameInstance.Instance.CurrentPlayer.AttackStrength += perk.Value;
             }
+
+            foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Defense))
+            {
+                foreach(var bodyPart in GameInstance.Instance.CurrentPlayer.Body)
+                {
+                    bodyPart.Defense += perk.Value;
+                }
+            }
+        }
+
+        private void EquipModifier(Modifier mod)
+        {
+            var modType = mod.Perk;
         }
 
         public void TakeOffItem(int itemIndex)
@@ -105,6 +119,14 @@ namespace TheFollow.Models
             foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Attack))
             {
                 GameInstance.Instance.CurrentPlayer.AttackStrength -= perk.Value;
+            }
+
+            foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Defense))
+            {
+                foreach (var bodyPart in GameInstance.Instance.CurrentPlayer.Body)
+                {
+                    bodyPart.Defense -= perk.Value;
+                }
             }
         }
 

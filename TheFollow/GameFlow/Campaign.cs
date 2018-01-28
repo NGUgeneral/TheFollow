@@ -140,8 +140,8 @@ namespace TheFollow.GameFlow
             var bodyPartToAttack = GameInstance.Instance.CurrentPlayer.Body.FirstOrDefault(x => x.Health > 0);
             if (bodyPartToAttack != null)
             {
-                bodyPartToAttack.Health -= monster.AttackStrength;
-                ConsoleHelpers.LogMessage("Monster hitted your {0} for {1}", bodyPartToAttack.Title, monster.AttackStrength);
+                bodyPartToAttack.Health -=  monster.AttackStrength - bodyPartToAttack.Defense;
+                ConsoleHelpers.LogMessage("Monster hitted your {0} for {1}", bodyPartToAttack.Title, monster.AttackStrength - bodyPartToAttack.Defense);
                 if (bodyPartToAttack.Health <= 0) ConsoleHelpers.LogMessage("Your {0}s has been crushed", bodyPartToAttack.Title);
                 ConsoleHelpers.LogUserMessage("You have {0}hp left overral", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
                 if (BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer) <= 0)

@@ -117,6 +117,8 @@ namespace TheFollow.StaticHelpers
         {
             LogMessage("Your hero is at level {0}", GameInstance.Instance.CurrentPlayer.Level);
             LogMessage("Experience {0}", GameInstance.Instance.CurrentPlayer.Experience);
+            LogMessage("You attack power is {0}", GameInstance.Instance.CurrentPlayer.AttackStrength);
+            LogMessage("Defense level is at {0}", GameInstance.Instance.CurrentPlayer.Body[0].Defense);
             LogMessage("Level up at {0}", GameInstance.Instance.CurrentPlayer.NextLevel);
             LogMessage("Current healt {0}hp", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
         }

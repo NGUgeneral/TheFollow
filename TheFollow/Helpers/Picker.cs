@@ -21,8 +21,8 @@ namespace TheFollow.StaticHelpers
                 currentPickChance = e.MaxPickChance;
             }
 
-            var throwRes = Dice.random.Next(0, (int)currentPickChance + 1);
-            return events.SingleOrDefault(x => throwRes >= x.MinPickChance && throwRes < x.MaxPickChance);
+            var throwRes = Dice.random.Next(1, (int)currentPickChance + 1);
+            return events.SingleOrDefault(x => throwRes > x.MinPickChance && throwRes <= x.MaxPickChance);
         }
     }
 }

@@ -6,8 +6,9 @@ namespace TheFollow.Models
     internal interface IItem
     {
         string Id { get; set; }
-        ItemType Type { get; set; }
+        ModifierType Type { get; set; }
         ItemTypeSpecifier Specifier { get; set; }
+        BodyPartType Slot { get; set; }
         bool Ranged { get; set; }
         bool TwoHanded { get; set; }
         bool Equiped { get; set; }

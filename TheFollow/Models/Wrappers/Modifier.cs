@@ -10,6 +10,7 @@ namespace TheFollow.Models.Wrappers
     internal class Modifier : IModifier
     {
         public ModifierType Perk { get; set; }
+        public BodyPartType Slot { get; set; }
         public int Value { get; set; }
     }
 }
