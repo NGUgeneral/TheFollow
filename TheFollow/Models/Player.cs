@@ -19,8 +19,8 @@ namespace TheFollow.Models
         public string Title { get; set; }
         public bool Alive { get; set; }
         public int AttackStrength { get; set; }
-        public List<IItem> Inventory { get; set; }
-        public List<IHealth> Body { get; set; }
+        public List<Item> Inventory { get; set; }
+        public List<BodyPart> Body { get; set; }
 
         public uint Experience { get; set; }
         public uint NextLevel { get; set; }
@@ -36,26 +36,29 @@ namespace TheFollow.Models
             AttackStrength = 2;
             NextLevel = 10;
             Alive = true;
-            Inventory = new List<IItem>();
-            Body = new List<IHealth>
+            Inventory = new List<Item>();
+            Body = new List<BodyPart>
             {
-                new BodyPart("Head", true, 3, 3),
-                new BodyPart("Torso", true, 10, 10),
-                new BodyPart("Right hand", false, 4, 4),
-                new BodyPart("Left hand", false, 4, 4),
-                new BodyPart("Right leg", false, 5, 5),
-                new BodyPart("Left leg", false, 5, 5)
+                new BodyPart(BodyPartType.Head, true, 3, 3),
+                new BodyPart(BodyPartType.Body, true, 10, 10),
+                new BodyPart(BodyPartType.RightHand, false, 4, 4),
+                new BodyPart(BodyPartType.LeftHand, false, 4, 4),
+                new BodyPart(BodyPartType.RightLeg, false, 5, 5),
+                new BodyPart(BodyPartType.LeftLeg, false, 5, 5)
             };
 
+            //Initial inventory
             Inventory.Add(Pools.GetItemById("TribalSword"));
             Inventory.Add(Pools.GetItemById("TribalOutfit"));
+            Inventory.Add(Pools.GetItemById("TribalHelmet"));
         }
 
         internal void EquipAllItems()
         {
-            foreach (var item in Inventory)
+            foreach(var item in Inventory)
             {
-                EquipItem(Inventory.IndexOf(item));
+                var bodyPartIndex = Body.IndexOf(Body.SingleOrDefault(x => x.Title == item.Slot) as BodyPart);
+                Body[bodyPartIndex].EquipItem(item.Id);
             }
         }
 
@@ -84,63 +87,6 @@ namespace TheFollow.Models
             foreach (var bodyPart in Body)
             {
                 if(bodyPart.Health < bodyPart.MaxHealth) bodyPart.Health += (bodyPart.MaxHealth - bodyPart.Health)/(3 - buff);
-            }
-        }
-
-        public void EquipItem(int itemIndex)
-        {
-            var item = Inventory[itemIndex];
-            Inventory.ElementAt(itemIndex).Equiped = true;
-
-            foreach(var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Attack))
-            {
-                GameInstance.Instance.CurrentPlayer.AttackStrength += perk.Value;
-            }
-
-            foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Defense))
-            {
-                foreach(var bodyPart in GameInstance.Instance.CurrentPlayer.Body)
-                {
-                    bodyPart.Defense += perk.Value;
-                }
-            }
-        }
-
-        private void EquipModifier(Modifier mod)
-        {
-            var modType = mod.Perk;
-        }
-
-        public void TakeOffItem(int itemIndex)
-        {
-            var item = Inventory[itemIndex];
-            Inventory.ElementAt(itemIndex).Equiped = false;
-
-            foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Attack))
-            {
-                GameInstance.Instance.CurrentPlayer.AttackStrength -= perk.Value;
-            }
-
-            foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Defense))
-            {
-                foreach (var bodyPart in GameInstance.Instance.CurrentPlayer.Body)
-                {
-                    bodyPart.Defense -= perk.Value;
-                }
-            }
-        }
-
-        public void ReplaceItems(int itemIndex1, int itemIndex2)
-        {
-            if (Inventory.ElementAt(itemIndex1).Equiped)
-            {
-                Inventory.ElementAt(itemIndex1).Equiped = false;
-                Inventory.ElementAt(itemIndex2).Equiped = true;
-            }
-            else
-            {
-                Inventory.ElementAt(itemIndex1).Equiped = true;
-                Inventory.ElementAt(itemIndex2).Equiped = false;
             }
         }
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TheFollow.GameFlow.Quests;
+using TheFollow.Helpers;
 using TheFollow.Models;
 using TheFollow.Models.Interfaces;
 using TheFollow.Models.Wrappers;
@@ -18,7 +20,9 @@ namespace TheFollow.GameFlow
             Console.WriteLine("\n\n-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-\nWelcome!\nPlease, type below the name for you character and we can start!");
             Console.Write("Pease type in you name: ");
             GameInstance.Instance.CurrentPlayer = new Player(Console.ReadLine());
+
             GameInstance.Instance.CurrentPlayer.EquipAllItems();
+
             Console.WriteLine("\nPlease - remember, any time you need help with the commands print '-h'");
             ConsoleHelpers.UserMessage("\nSo, {0}, your journey has begun.", GameInstance.Instance.CurrentPlayer.Name);
 
@@ -109,78 +113,16 @@ namespace TheFollow.GameFlow
             ConsoleHelpers.FilterInput("\nPress enter to face the enemy.", new ConsoleKey[] { ConsoleKey.Enter });
             while (monster.Alive)
             {
-                BattleTurn(ref monster);
-                if (!GameInstance.Instance.CurrentPlayer.Alive) { HandleDeath(monster); break; }
+                FightHelper.BattleTurn(ref monster);
+                if (!GameInstance.Instance.CurrentPlayer.Alive) { FightHelper.HandleDeath(monster); break; }
             }
 
-            if (GameInstance.Instance.CurrentPlayer.Alive) ProcessVictory(monster);
+            if (GameInstance.Instance.CurrentPlayer.Alive) FightHelper.ProcessVictory(monster);
         }
 
-        private static void BattleTurn(ref Monster monster)
-        {
-            AttackMonster(ref monster);
-            if (monster.Alive) { AttackPlayer(ref monster); }
-        }
+        
 
-        private static void AttackMonster(ref Monster monster)
-        {
-            var bodyPartToAttack = monster.Body.FirstOrDefault(x => x.Health > 0);
-            if (bodyPartToAttack != null)
-            {
-                bodyPartToAttack.Health -= GameInstance.Instance.CurrentPlayer.AttackStrength;
-                ConsoleHelpers.LogMessage("You hitted {0} for {1}", monster.Name, GameInstance.Instance.CurrentPlayer.AttackStrength);
-                if (bodyPartToAttack.Health <= 0) ConsoleHelpers.LogMessage("You have crushed the {0}s {1}", monster.Name, bodyPartToAttack.Title);
-                ConsoleHelpers.LogEnemyMessage("Monster have {0}hp left overral", BodyStats.GetTotalHealth(monster));
-                if (BodyStats.GetTotalHealth(monster) <= 0) monster.Alive = false;
-            }
-        }
-
-        private static void AttackPlayer(ref Monster monster)
-        {
-            var bodyPartToAttack = GameInstance.Instance.CurrentPlayer.Body.FirstOrDefault(x => x.Health > 0);
-            if (bodyPartToAttack != null)
-            {
-                bodyPartToAttack.Health -=  monster.AttackStrength - bodyPartToAttack.Defense;
-                ConsoleHelpers.LogMessage("Monster hitted your {0} for {1}", bodyPartToAttack.Title, monster.AttackStrength - bodyPartToAttack.Defense);
-                if (bodyPartToAttack.Health <= 0) ConsoleHelpers.LogMessage("Your {0}s has been crushed", bodyPartToAttack.Title);
-                ConsoleHelpers.LogUserMessage("You have {0}hp left overral", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
-                if (BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer) <= 0)
-                {
-                    GameInstance.Instance.CurrentPlayer.Alive = false;
-                }
-            }
-        }
-
-        private static void ProcessVictory(Monster monster)
-        {
-            ConsoleHelpers.LogMessage("Congratulations! You have slain the {0} {1}", monster.Title, monster.Name);
-            ConsoleHelpers.LogUserMessage("You have {0}hp left.", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
-            AddExperience(1);
-        }
-
-        private static void HandleDeath(Monster monster)
-        {
-            ConsoleHelpers.LogMessage("\n---xxx---xxx---xxx---xxx---xxx---xxx---xxx---xxx---xxx---xxx---xxx---xxx---\nIt has been a journey, my friend.\nBut at the end - you failed and have been left for dying.\nA pitty {0} {1} have killed you ...\nNo mercy from the gods.", monster.Title, monster.Name);
-            HandleEndGame();
-        }
-
-        private static void AddExperience(uint exp)
-        {
-            GameInstance.Instance.CurrentPlayer.Experience += exp;
-            ConsoleHelpers.LogUserMessage("{0} points of experience acquired!", exp);
-
-            if (GameInstance.Instance.CurrentPlayer.Experience >= GameInstance.Instance.CurrentPlayer.NextLevel)
-            {
-                ProcessLevelUp();
-            }
-            else
-            {
-                Console.WriteLine("{0} more points until the next level!", GameInstance.Instance.CurrentPlayer.NextLevel - GameInstance.Instance.CurrentPlayer.Experience);
-            }
-
-        }
-
-        private static void ProcessLevelUp()
+        internal static void ProcessLevelUp()
         {
             foreach (var b in GameInstance.Instance.CurrentPlayer.Body)
             {
@@ -192,6 +134,12 @@ namespace TheFollow.GameFlow
             GameInstance.Instance.CurrentPlayer.Level += 1;
             GameInstance.Instance.CurrentPlayer.NextLevel += 10;
             ConsoleHelpers.UserMessage("Congratulations! You gained a level up! Current level is {0}", GameInstance.Instance.CurrentPlayer.Level);
+
+            var currentQuest = GameInstance.Instance.CurrentGameData.Quests[GameInstance.Instance.CurrentGameData.CurrentQuestIndex];
+            if (currentQuest is Quest1_TheTrial)
+            {
+                currentQuest.TryToComplete();
+            }
         }
     }
 }

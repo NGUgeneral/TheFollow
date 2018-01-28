@@ -36,6 +36,9 @@ namespace TheFollow.StaticHelpers
                     case "s":
                         PrintStat();
                         break;
+                    case "q":
+                        PrintQuest();
+                        break;
                     case "i":
                         PrintInventory();
                         break;
@@ -52,6 +55,12 @@ namespace TheFollow.StaticHelpers
             }
         }
 
+        private static void PrintQuest()
+        {
+            var currentQuest = GameInstance.Instance.CurrentGameData.Quests[GameInstance.Instance.CurrentGameData.CurrentQuestIndex];
+            currentQuest.GetGoalDescription();
+        }
+
         private static void TakeOff_E()
         {
             LogMessage("Which slot would you like to take off?");
@@ -66,7 +75,10 @@ namespace TheFollow.StaticHelpers
                     }
                     else
                     {
-                        GameInstance.Instance.CurrentPlayer.TakeOffItem(index - 1);
+                        var item = GameInstance.Instance.CurrentPlayer.Inventory[index - 1];
+                        var bodyPart = GameInstance.Instance.CurrentPlayer.Body.SingleOrDefault(x => x.Title == item.Slot);
+                        bodyPart.TakeOffItem(item.Id);
+
                         LogMessage("You have removed item");
                     }
                 }
@@ -91,7 +103,10 @@ namespace TheFollow.StaticHelpers
                     }
                     else
                     {
-                        GameInstance.Instance.CurrentPlayer.EquipItem(index - 1);
+                        var item = GameInstance.Instance.CurrentPlayer.Inventory[index - 1];
+                        var bodyPart = GameInstance.Instance.CurrentPlayer.Body.SingleOrDefault(x => x.Title == item.Slot);
+                        bodyPart.EquipItem(item.Id);
+
                         LogMessage("You have equiped item");
                     }
                 }
@@ -118,7 +133,6 @@ namespace TheFollow.StaticHelpers
             LogMessage("Your hero is at level {0}", GameInstance.Instance.CurrentPlayer.Level);
             LogMessage("Experience {0}", GameInstance.Instance.CurrentPlayer.Experience);
             LogMessage("You attack power is {0}", GameInstance.Instance.CurrentPlayer.AttackStrength);
-            LogMessage("Defense level is at {0}", GameInstance.Instance.CurrentPlayer.Body[0].Defense);
             LogMessage("Level up at {0}", GameInstance.Instance.CurrentPlayer.NextLevel);
             LogMessage("Current healt {0}hp", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
         }
@@ -129,6 +143,7 @@ namespace TheFollow.StaticHelpers
             LogMessage("List of availiable commands:");
             LogMessage("h - bring help;");
             LogMessage("s - show stats;");
+            LogMessage("q - show current quest goal;");
             LogMessage("i - print out inventory;");
             LogMessage("e - equip inventory item;");
             LogMessage("t - take off inventory item;");

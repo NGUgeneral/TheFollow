@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.BodyParts;
+using TheFollow.Models.Interfaces;
 using TheFollow.StaticHelpers;
 
 namespace TheFollow.Models
@@ -17,8 +18,8 @@ namespace TheFollow.Models
         public string Title { get; set; }
         public bool Alive { get; set; }
         public int AttackStrength { get; set; }
-        public List<IItem> Inventory { get; set; }
-        public List<IHealth> Body { get; set; }
+        public List<Item> Inventory { get; set; }
+        public List<BodyPart> Body { get; set; }
 
         public Monster()
         {
@@ -29,10 +30,10 @@ namespace TheFollow.Models
             Title = Pools.GetTitleForLevel(Level);
             Alive = true;
             AttackStrength = Level;
-            Body = new List<IHealth>
+            Body = new List<BodyPart>
             {
-                new BodyPart("Head", true, 3, 3),
-                new BodyPart("Torso", true, 10, 10)
+                new BodyPart(BodyPartType.Head, true, 3, 3),
+                new BodyPart(BodyPartType.Body, true, 10, 10)
             };
         }
     }
