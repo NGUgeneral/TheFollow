@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models.BodyParts;
+using TheFollow.Models.Interfaces;
 using TheFollow.StaticHelpers;
 
 namespace TheFollow.Models
@@ -17,8 +18,8 @@ namespace TheFollow.Models
         public string Title { get; set; }
         public bool Alive { get; set; }
         public int AttackStrength { get; set; }
-        public IEnumerable<IItem> Inventory { get; set; }
-        public IEnumerable<IHealth> Body { get; set; }
+        public List<IItem> Inventory { get; set; }
+        public List<IHealth> Body { get; set; }
 
         public uint Experience { get; set; }
         public uint NextLevel { get; set; }
@@ -34,6 +35,7 @@ namespace TheFollow.Models
             AttackStrength = 2;
             NextLevel = 10;
             Alive = true;
+            Inventory = new List<IItem>();
             Body = new List<IHealth>
             {
                 new BodyPart("Head", true, 3, 3),
@@ -43,9 +45,20 @@ namespace TheFollow.Models
                 new BodyPart("Right leg", false, 5, 5),
                 new BodyPart("Left leg", false, 5, 5)
             };
+
+            Inventory.Add(Pools.GetItemById("TribalSword"));
+            Inventory.Add(Pools.GetItemById("TribalOutfit"));
         }
 
-        internal void Regenerate()
+        internal void EquipAllItems()
+        {
+            foreach (var item in Inventory)
+            {
+                EquipItem(Inventory.IndexOf(item));
+            }
+        }
+
+        public void Regenerate()
         {
             Regenerate_Action();
         }
@@ -58,7 +71,7 @@ namespace TheFollow.Models
             }
         }
 
-        internal void PartialRegenerate(int buff = 0)
+        public void PartialRegenerate(int buff = 0)
         {
             PartialRegenerate_Action(buff);
             Console.WriteLine("You have healed up a little bit.");
@@ -70,6 +83,42 @@ namespace TheFollow.Models
             foreach (var bodyPart in Body)
             {
                 if(bodyPart.Health < bodyPart.MaxHealth) bodyPart.Health += (bodyPart.MaxHealth - bodyPart.Health)/(3 - buff);
+            }
+        }
+
+        public void EquipItem(int itemIndex)
+        {
+            var item = Inventory[itemIndex];
+            Inventory.ElementAt(itemIndex).Equiped = true;
+
+            foreach(var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Attack))
+            {
+                GameInstance.Instance.CurrentPlayer.AttackStrength += perk.Value;
+            }
+        }
+
+        public void TakeOffItem(int itemIndex)
+        {
+            var item = Inventory[itemIndex];
+            Inventory.ElementAt(itemIndex).Equiped = false;
+
+            foreach (var perk in item.Modifiers.Where(x => x.Perk == ModifierType.Attack))
+            {
+                GameInstance.Instance.CurrentPlayer.AttackStrength -= perk.Value;
+            }
+        }
+
+        public void ReplaceItems(int itemIndex1, int itemIndex2)
+        {
+            if (Inventory.ElementAt(itemIndex1).Equiped)
+            {
+                Inventory.ElementAt(itemIndex1).Equiped = false;
+                Inventory.ElementAt(itemIndex2).Equiped = true;
+            }
+            else
+            {
+                Inventory.ElementAt(itemIndex1).Equiped = true;
+                Inventory.ElementAt(itemIndex2).Equiped = false;
             }
         }
     }

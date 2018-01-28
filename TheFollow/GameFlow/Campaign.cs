@@ -14,42 +14,32 @@ namespace TheFollow.GameFlow
     {
         internal static void LaunchInterface()
         {
+            GameInstance.Instance.CurrentGameData = new GameData();
             Console.WriteLine("\n\n-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-\nWelcome!\nPlease, type below the name for you character and we can start!");
             Console.Write("Pease type in you name: ");
             GameInstance.Instance.CurrentPlayer = new Player(Console.ReadLine());
-            Console.WriteLine("\nSo, {0}, your journey has begun.", GameInstance.Instance.CurrentPlayer.Name);
-            while (GameInstance.Instance.CurrentPlayer.Alive)
+            GameInstance.Instance.CurrentPlayer.EquipAllItems();
+            Console.WriteLine("\nPlease - remember, any time you need help with the commands print '-h'");
+            ConsoleHelpers.UserMessage("\nSo, {0}, your journey has begun.", GameInstance.Instance.CurrentPlayer.Name);
+
+            HandleSwitchQuest();
+            
+            while (GameInstance.Instance.CurrentPlayer.Alive && !GameInstance.Instance.CurrentGameData.Finished)
             {
-                if (GameInstance.Instance.CurrentPlayer.Level == 3)
-                {
-                    ConsoleHelpers.UserMessage("\nYou reachecd level 3 and won the game! Congratulations!");
-                    HandleEndGame();
-                    break;
-                }
                 StartDay();
             }
         }
 
-        private static void HandleEndGame()
+        internal static void HandleSwitchQuest()
         {
-            GameInstance.UpdateReplay(ConsoleHelpers.FilterInput("Would you like to replay? (y/n)", new ConsoleKey[] { ConsoleKey.Y, ConsoleKey.N }) == ConsoleKey.Y ? true : false);
+            var currentQuest = GameInstance.Instance.CurrentGameData.Quests[GameInstance.Instance.CurrentGameData.CurrentQuestIndex];
+            currentQuest.GetIntro();
+            currentQuest.GetGoalDescription();
         }
 
-        static void Start()
+        internal static void HandleEndGame()
         {
-            Console.WriteLine("\n\n-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-\nWelcome!\nPlease, type below the name for you character and we can start!");
-            Console.Write("Pease type in you name: ");
-            GameInstance.Instance.CurrentPlayer = new Player(Console.ReadLine());
-            Console.WriteLine("\nSo, {0}, your journey has begun.", GameInstance.Instance.CurrentPlayer.Name);
-            while (GameInstance.Instance.CurrentPlayer.Alive)
-            {
-                if (GameInstance.Instance.CurrentPlayer.Level == 3)
-                {
-                    ConsoleHelpers.UserMessage("\nYou reachecd level 3 and won the game! Congratulations!");
-                    break;
-                }
-                StartDay();
-            }
+            GameInstance.Instance.CurrentGameData.Replay = ConsoleHelpers.FilterInput("Would you like to replay? (y/n)", new ConsoleKey[] { ConsoleKey.Y, ConsoleKey.N }) == ConsoleKey.Y ? true : false;
         }
 
         private static void StartDay()
@@ -57,8 +47,7 @@ namespace TheFollow.GameFlow
             var player = GameInstance.Instance.CurrentPlayer;
             Console.WriteLine("\nNew day. What will it bring?");
             ConsoleHelpers.LogUserMessage("Current health is {0}hp", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
-            Console.WriteLine("Press enter to make a move and see what this day brought you");
-            Console.ReadKey();
+            ConsoleHelpers.FilterInput("Press enter to make a move and see what this day brought you", new ConsoleKey[]{ ConsoleKey.Enter });
 
             var dayEvent = EventWeight.Pick(new List<EventWeight> {
                 new EventWeight { Event = EventType.None, PickWeight = 20 },
@@ -111,15 +100,13 @@ namespace TheFollow.GameFlow
         {
             Console.WriteLine("You found a village with a friendly people.\nYou feel safe enough, so you are taking your chance to have a rest from your wandering and heal you wounds.");
             GameInstance.Instance.CurrentPlayer.PartialRegenerate(1);
-            Console.ReadKey();
         }
 
         private static void HandleMonsterEncounter()
         {
             var monster = Pools.GetMonster();
             ConsoleHelpers.LogEnemyMessage("You have encountered a monster. It is an {0} {1}", monster.Title, monster.Name);
-            Console.WriteLine("\nPress enter to face the enemy.");
-            Console.ReadKey();
+            ConsoleHelpers.FilterInput("\nPress enter to face the enemy.", new ConsoleKey[] { ConsoleKey.Enter });
             while (monster.Alive)
             {
                 BattleTurn(ref monster);
@@ -169,7 +156,6 @@ namespace TheFollow.GameFlow
             ConsoleHelpers.LogMessage("Congratulations! You have slain the {0} {1}", monster.Title, monster.Name);
             ConsoleHelpers.LogUserMessage("You have {0}hp left.", BodyStats.GetTotalHealth(GameInstance.Instance.CurrentPlayer));
             AddExperience(1);
-            Console.ReadKey();
         }
 
         private static void HandleDeath(Monster monster)

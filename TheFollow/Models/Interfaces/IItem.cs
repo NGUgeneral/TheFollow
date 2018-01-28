@@ -7,6 +7,10 @@ namespace TheFollow.Models
     {
         string Id { get; set; }
         ItemType Type { get; set; }
+        ItemTypeSpecifier Specifier { get; set; }
+        bool Ranged { get; set; }
+        bool TwoHanded { get; set; }
+        bool Equiped { get; set; }
         string Description { get; set; }
         IEnumerable<IModifier> Modifiers { get; set; }
     }

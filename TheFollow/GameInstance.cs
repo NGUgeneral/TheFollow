@@ -1,20 +1,21 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using TheFollow.GameFlow;
+using TheFollow.GameFlow.Quests;
 using TheFollow.Helpers;
 using TheFollow.Models;
 
 namespace TheFollow
 {
-    internal class GameInstance
-    {
+    internal class GameInstance    {
         private static readonly GameInstance instance = new GameInstance();
         internal Player CurrentPlayer { get; set; }
-        private static bool Replay = true;
-
-        private GameInstance() { }
+        internal GameData CurrentGameData { get; set; }
 
         internal static GameInstance Instance
         {
@@ -22,16 +23,6 @@ namespace TheFollow
             {
                 return instance;
             }
-        }
-
-        internal static void UpdateReplay(bool replay)
-        {
-            Replay = replay;
-        }
-
-        internal static bool GetReplay()
-        {
-            return Replay;
         }
     }
 }

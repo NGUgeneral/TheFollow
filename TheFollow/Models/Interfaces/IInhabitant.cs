@@ -15,7 +15,7 @@ namespace TheFollow.Models
         string Title { get; set; }
         bool Alive { get; set; }
         int AttackStrength { get; set; }
-        IEnumerable<IItem> Inventory { get; set; }
-        IEnumerable<IHealth> Body { get; set; }
+        List<IItem> Inventory { get; set; }
+        List<IHealth> Body { get; set; }
     }
 }

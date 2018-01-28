@@ -8,16 +8,29 @@ namespace TheFollow.Models.Interfaces
 {
     internal enum ItemType
     {
+        Plates = 1,
+        Weapon = 2,
+        Consumable = 3
+    }
+
+    internal enum ItemTypeSpecifier
+    {
         HeadGear = 1,
         BodyPlate = 2,
         Gloves = 3,
         Legins = 4,
         Boots = 5,
-        Weapon = 6,
-        TwoHandedWeapon = 7,
-        Shield = 8,
-        Amulet = 9,
-        Consumable = 10
+        Amulet = 6,
+        AttackGear = 7,
+        DefenseGear = 9,
+        None = 10
+    }
+
+    internal enum ModifierType
+    {
+        Attack = 1,
+        Defense = 2,
+        Heal = 3
     }
 
     internal enum EventType

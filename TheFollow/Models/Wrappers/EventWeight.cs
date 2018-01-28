@@ -15,11 +15,9 @@ namespace TheFollow.Models.Wrappers
         public uint MinPickChance { get; set; }
         public uint MaxPickChance { get; set; }
 
-        public static EventType Pick(IEnumerable<IPickable> events)
+        internal static EventType Pick(IEnumerable<IPickable> events)
         {
             return (Picker<EventWeight>.Pick_Action(events) as EventWeight).Event;
         }
     }
-
-    
 }

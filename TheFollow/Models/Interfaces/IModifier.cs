@@ -1,9 +1,10 @@
-﻿namespace TheFollow.Models
+﻿using TheFollow.Models.Interfaces;
+
+namespace TheFollow.Models
 {
-    public interface IModifier
+    interface IModifier
     {
-        string Id { get; set; }
-        string Perk { get; set; }
+        ModifierType Perk { get; set; }
         int Value { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace TheFollow
     {
         static void Main(string[] args)
         {
-            while (GameInstance.GetReplay())
+            while (GameInstance.Instance.CurrentGameData == null ? true : GameInstance.Instance.CurrentGameData.Replay)
             {
                 Campaign.LaunchInterface();
             }

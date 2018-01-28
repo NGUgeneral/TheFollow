@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheFollow.Models;
+using TheFollow.Models.Interfaces;
+using TheFollow.Models.Wrappers;
 
 namespace TheFollow.StaticHelpers
 {
@@ -35,11 +37,49 @@ namespace TheFollow.StaticHelpers
 
             new Title (10, "Legendary")
         };
-        internal static List<string> MonsterNamesLibrary = new List<string>
+        private static List<string> MonsterNamesLibrary = new List<string>
         {
             "Rat",
             "Goo",
             "Thief"
+        };
+
+        private static List<Item> Items = new List<Item>()
+        {
+            new Item()
+            {
+                Id="TribalSword",
+                Type = ItemType.Weapon,
+                Specifier = ItemTypeSpecifier.AttackGear,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "A traditional small, one handed sword of your tribe. Your father helped you to craft it.",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Attack,
+                        Value = 1
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalOutfit",
+                Type = ItemType.Plates,
+                Specifier = ItemTypeSpecifier.BodyPlate,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "A traditional outfit of your tribe.",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Value = 1
+                    }
+                }
+            }
         };
 
         public static string GetTitleForLevel(int level)
@@ -58,6 +98,11 @@ namespace TheFollow.StaticHelpers
         internal static Monster GetMonster()
         {
             return new Monster();
+        }
+
+        internal static Item GetItemById(string id)
+        {
+            return Items.SingleOrDefault(x => x.Id == id);
         }
     }
 }
