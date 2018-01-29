@@ -33,11 +33,7 @@ namespace TheFollow.Models.Interfaces
         RightHand = 3,
         LeftHand = 4,
         RightLeg = 5,
-        LeftLeg = 6,
-        RightHand_2 = 7,
-        LeftHand_2 = 8,
-        RightLeg_2 = 9,
-        LeftLeg_2 = 10
+        LeftLeg = 6
     }
 
     internal enum EventType

@@ -194,13 +194,13 @@ namespace TheFollow.Helpers
             },
             new Item()
             {
-                Id="TribalLeggings",
+                Id="TribalBoot_L",
                 Type = ModifierType.Defense,
                 Specifier = ItemTypeSpecifier.Leggings,
                 Slot = BodyPartType.LeftLeg,
                 Ranged = false,
                 TwoHanded = false,
-                Description = "Tribal leggings",
+                Description = "Tribal boot L",
                 Modifiers = new List<Modifier>
                 {
                     new Modifier
@@ -212,13 +212,67 @@ namespace TheFollow.Helpers
             },
             new Item()
             {
-                Id="TribalBracers",
+                Id="TribalBoot_R",
+                Type = ModifierType.Defense,
+                Specifier = ItemTypeSpecifier.Leggings,
+                Slot = BodyPartType.RightLeg,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "Tribal boot R",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Value = 1
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalBracers_R",
+                Type = ModifierType.Defense,
+                Specifier = ItemTypeSpecifier.Gloves,
+                Slot = BodyPartType.RightHand,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "Tribal bracer R",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Value = 1
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalBracers_R_Heavy",
+                Type = ModifierType.Defense,
+                Specifier = ItemTypeSpecifier.Gloves,
+                Slot = BodyPartType.RightHand,
+                Ranged = false,
+                TwoHanded = false,
+                Description = "Heavy Tribal bracer R",
+                Modifiers = new List<Modifier>
+                {
+                    new Modifier
+                    {
+                        Perk = ModifierType.Defense,
+                        Value = 2
+                    }
+                }
+            },
+            new Item()
+            {
+                Id="TribalBracers_L",
                 Type = ModifierType.Defense,
                 Specifier = ItemTypeSpecifier.Gloves,
                 Slot = BodyPartType.LeftHand,
                 Ranged = false,
                 TwoHanded = false,
-                Description = "Tribal bracers",
+                Description = "Tribal bracer L",
                 Modifiers = new List<Modifier>
                 {
                     new Modifier

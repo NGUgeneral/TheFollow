@@ -138,10 +138,13 @@ namespace TheFollow.GameFlow
             switch(GameInstance.Instance.CurrentPlayer.Level)
             {
                 case 2:
-                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalBracers"));
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalBracers_L"));
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalBracers_R_Heavy"));
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalBoot_L"));
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalBoot_R"));
                     break;
                 case 3:
-                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalLeggings"));
+                    InventoryHelper.AddItemToInventory(Pools.GetItemById("TribalShield"));
                     break;
                 default:
                     break;
