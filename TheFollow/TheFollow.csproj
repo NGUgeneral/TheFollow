@@ -46,6 +46,10 @@
     <Compile Include="GameFlow\Campaign.cs" />
     <Compile Include="GameFlow\Quests\Quest1_TheTrial.cs" />
     <Compile Include="Helpers\FightHelper.cs" />
+    <Compile Include="Models\Card\Interfaces\IActionCard.cs" />
+    <Compile Include="Models\Card\Interfaces\ICard.cs" />
+    <Compile Include="Models\Card\Interfaces\IStoryCard.cs" />
+    <Compile Include="Models\Card\StoryCardRequirement.cs" />
     <Compile Include="Models\Player_Inventory.cs" />
     <Compile Include="Models\GameData.cs" />
     <Compile Include="Models\Interfaces\IEnemy.cs" />
@@ -64,6 +68,7 @@
     <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Title.cs" />
+    <Compile Include="Models\World\WorldState.cs" />
     <Compile Include="Models\Wrappers\EventWeight.cs" />
     <Compile Include="Models\Wrappers\Modifier.cs" />
     <Compile Include="Program.cs" />
